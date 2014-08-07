@@ -1,0 +1,113 @@
+PHP Database Application Programming Interface (API)
+=====================================================================
+
+ To use database product in PHP code we have number of APIs but few of  them have industry standards.
+
+ Basically in PHP 5, MySql Extension API is deprecated (retired) due to  its inability to meet industry standards and also expose the database   venarability.
+
+   There are few lib that we must have to use in order to use the databases and these are:
+
+    1. MySql Improved Extension API -- It is an object oriented library        to expose the functionaities of MySql Database (of any version).
+  
+    2. PDO - PHP Data Object API -- It is an object oriented lib to expose the functionalities of any database products including MySql, Oracle, MSSQL, DB2, Sybase, ODBC (Ms-Access, Excel, Dbase) and so on.
+
+       The only difference between PDO and MySql Improved is that the MySql Improved can only be used with MySql whereas PDO can be used with any known database product.
+
+     [Note: Zend, CodeIgniter and other framework uses PDO]
+
+We will learn both but we will use PDO in general development.
+
+
+Following issues are encountered while using old Mysql Extension API:
+
+   1. SQL Injection -- This is the name of attack on database where
+		        any one can insert "extra" SQL statement into
+			existing SQL statement.
+
+   2. Escape (Script, Backslash and tag) - This is the name of attack in which javascript script code, html tag and special characters are ignored by the APIs and that can harm the databases.
+
+ 
+PDO  class library
+===================
+
+1. PDO class -- PDO constructor receive the database connection string and its method called "prepare" creates a parameterized (pre-compiled) sql statement which prevents SQL Injection, Escape and Cross Site SCript injection (XSS).
+
+   $cn = new PDO("mysql:host=localhost;dbname=your_database",
+                            "username","password");
+
+
+Example:
+
+<?php
+  $cn = new PDO("mysql:host=localhost;dbname=kapildb","root","");
+  echo "success";
+?>
+
+  prepare($sql) : It compiles the "SQL" statement first and then it                   uses "parameter variables" to create place holders 
+		  to send data seperately to the database.
+
+                  After then the prepare() method returns an object
+                  of PDOStatement class through which we can 
+                  bind values to the parameters, execute sql statement
+		  and retrieving result.
+
+           
+Example:
+
+<?php
+   $cn = new PDO("mysql:host=localhost;dbname=kapildb","root","");
+   $sql = "insert into dept (dept_name) values (:p1)";
+   $st = $cn->prepare($sql);
+
+   $deptName = "Accounting";
+   $st->bindParam(":p1", $deptName);
+  
+   if($st->execute())
+        echo "Success";
+   else
+         echo "Failed";
+?>
+
+Methods of PDOStatement
+-----------------------
+
+ 1. bindParam(":paramName",$phpVariable) -- To bind the PHP variables
+	with parameter name.
+
+ 2. execute() -- It execute "Query" and return true if success return 		 false otherwise.
+
+ 3. fetch() -- It fetch a row and returns an array if row has data 		returns null (false) otherwise.
+
+ 4. fetchAll() -- It fetch all rows from the database.
+
+[NOTE: USE fetch() or fetchAll() when SELECT Statement is used]
+
+   
+
+ 
+fetch()   -- fetch row one by one
+========  
+
+<?php
+   $cn = new PDO("mysql:host=localhost;dbname=kapildb","root","");
+   $sql = "select * from student";
+   $st = $cn->prepare($sql);
+   if($st->execute()){
+   	  while($row = $st->fetch()) {
+   	  	 print_r($row);
+   	  }
+   }
+?>
+
+fetchAll() -- All rows at once
+=========
+<?php
+   $cn = new PDO("mysql:host=localhost;dbname=kapildb","root","");
+   $sql = "select * from student";
+   $st = $cn->prepare($sql);
+   if($st->execute()){
+   	  $rows = $st->fetchAll();
+	   print_r($rows);
+   }
+   
+?>

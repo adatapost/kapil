@@ -1,0 +1,356 @@
+jQuery
+=====================================================================
+
+The "jQuery" is an open-source JavaScript library which offers:
+
+   => DOM selection
+   => DOM creation and manipulation
+   => Attach/detach event handing
+   => Request resources via Asynchronious JavaScript and XML
+      and many more. 
+
+In fact jQuery does all these things which have be with JavaScript but easy and concise manner.
+
+In order to use jQuery, download the jquery.x.x..js from jquery.com. There are two flavors of jQuery.js:
+ 
+  1. jQuery.1.x.x.js -- It offers compatiblility with old and new 			browsers. (e.g IE 6,7,8,9 etc)
+
+  2. jQuery.2.x.x.js -- It is for new web 2.0 standard browsers 			including IE10, moziall, safari, chrone, etc.
+
+
+Both flavors include two .js files - one is production or minified or compressed and another is debug version (un-compressed) for developer to understand the jQuery and debug the code.
+
+In order to use jQuery, add the <script src="jquery_url"></script> in your web-document.
+
+  If jquery.x.x.js is exists under the web-root then,
+
+      <script src="folder/jquery.js"></script>  
+
+  Or if you want to use Content Developer Network - CDN then choose jquery,google or microsoft CDN url.
+  
+  For example,
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+What is $?
+===================================================================
+The $ in JavaScript is allowable char to create an identifier but in jQuery it is a reference variable which represents an object of jQuery.
+
+ window.$ or window.jQuery are two reference variables exists to access  the jQuery object and functions.
+
+Example:
+<!doctype html>
+
+<script src="js/jquery-2.1.0.js"></script>
+<div id="test"></div>
+<script>
+   $("#test").html("Hi").css("color","red");
+</script>
+
+jQuery initialization function
+===================================================================
+
+$(function(){
+   //code of this function will be executed after all
+   //DOMs in web-browser are created and rendered.
+});
+
+Or
+
+jQuery( function() { 
+   ....
+});
+
+This initialization function ensure that the code in it will be executed after all DOMs are rendered on web-browser.
+
+Example:
+
+<!doctype html>
+
+<script src="js/jquery-2.1.0.js"></script>
+
+<script>
+ $(function(){
+   alert("hi");	
+ });
+</script>
+
+<h1>Hello Mohan!</h1>
+<h1>Hi Raj!</h1>
+
+
+jQuery Selectors
+======================================================================
+The power of jQuery is lie in its selectors. The jQuery uses CSS style selectors to select DOM(s).
+
+Selector Syntax:
+
+  $("selector_pattern") -- It returns single or multiple jQuery DOMs if
+			   selector_pattern maches. Returns null 			   otherwise.
+
+
+1. * Universal selector - select all DOMs.
+
+ 
+ <script src="js/jquery-2.1.0.js"></script>
+ <script>
+    console.log($("*"));
+    $("*").css("border","1px solid red");
+</script>
+
+2. tag selector
+
+  $("tagNAme")
+
+ <script>
+    $("h1").css("border","1px solid red");
+    $("div,h2").css("border","1px solid green");
+ </script>
+
+3. class selector
+
+   $(".className")
+
+   <input type="text" class="my-text"/>
+   <script>
+      $(".my-text").css("background","red")
+                   .css("color","white");
+   </script>
+
+4. id selector
+
+  $("#id")
+
+  <h1 id="header">Hello World</h1>
+
+   <script>
+    $("#header").css("color","red");
+   </script>
+
+5. Sibling selector
+
+   $("selector1+selector2")
+
+                <h1>Chapter1</h1>
+		<p>Description1</p>
+		<h1>Chapter2</h1>
+		<p>Description2</p>
+		<h1>Chapter3</h1>
+		<p>Description3</p>
+		 
+		<script src="js/jquery-2.1.0.js"></script>
+		<script>
+		   $("h1+p").css("color","red");
+		</script>
+
+6. children selector
+
+  $("selector1 selector2")
+
+7. descedent selector
+
+   $("selector1 > selector2")
+
+
+                <div id="item">
+		 	<p>One</p>
+		 	<h4>Head4</h4>
+		 	<div>
+		 		<p>One and One</p>
+		 	</div>
+		 	<p>Two</p>
+		 </div>
+		 
+		<script src="js/jquery-2.1.0.js"></script>
+		<script>
+		  // $("#item p").css("color","red");
+		   $("#item > p").css("color","red");
+		</script>
+ 
+jQuery Functions
+=======================================
+jQuery functions returns an instance of DOM too so we can call jQuery function like a chain.
+
+1. css("attribute","value") -- Set attribute value
+2. css("attribute") -- get attribute value
+
+ console.log( $("h1").css("color") ); //returns text color
+ $("h1").css("color","red").css("background","#222");
+
+3. html("value") -- set html text into inner part of the open and close                      tag.
+4. html() -- return inner html
+
+  <h1>Hello World</h1>
+  <script>
+    console.log(  $("h1").html() );
+    $("h1").html("Hi! I'm back");
+  </script>
+
+5. val(value) -- set value into input/textarea/select elements
+6. val() -- get value from input/textarea/select
+
+  <input type="text" id="no" value="10"/>
+  <script>
+    var no = $("#no").val();
+    console.log(no); //10
+
+    $("#no").val("2000");
+  </script>
+
+7. attr('attribute','value') - To set attribute value
+8. attr('attribute')         - To get attribute value
+
+  <input type="text" id="item1"/>
+
+  <script>
+     if( $("#item1").attr('type') == 'text') {
+          $('#item1').attr('type','submit');
+     }
+  </script>
+  
+9. addClass('cssClassName')
+10. removeClass('cssClassName')
+11. toggleClass('cssClassName') -- Removes if cssClass is exists adds 				  otherwise.
+
+<style>
+   .one { color:red;}
+   .two { border:1px solid black;}
+</style>
+
+ <h1 id="h1">Hello World</h1>
+ <h1 id="h2" class="two">Hello World</h1>
+
+ <script>
+    $("#h1").addClass('one').addClass('two');
+    $("#h2").toggleClass('two');
+ </script>
+
+12. hide() - hides DOM(s)
+13. hide(millis) -- Hides with given interval
+14. show() -- Shows DOM(s)
+15. show(milis) --  Shows with given interval
+
+Event handling
+=================================================
+
+ jQuery event name are similar as JavaScript except it remove "on" prefix.
+
+  for example, in JavaScript "onclick" event name is used where as in   jQuery it is "click".
+
+Example:
+
+ <p id="para1">Para1</p>
+ <a href="#" id="link1">Click Me</a>
+ <input type="button" value="Click Me" id="button1"/>
+
+ <div id="result"></div>
+ <script>
+   $("#para1").click( function() {
+       $("#result").html("Para clicked");
+   });
+
+  $("#link1").click( function() {
+       $("#result").html("Link clicked");
+   });
+
+  $("#button1").click( function() {
+       $("#result").html("Button clicked");
+   });
+ </script>
+
+General Syntax:
+
+   dom.eventName( function( event, args ) { ...} );
+
+
+
+To receive event specific data, add two argument to the event-handler:
+
+   function(event, args) {
+      ...
+    }
+
+Example: Filter the digits 
+
+                <input type="text" id="no"/>
+		 
+		 <div id="output"></div>
+		 
+		<script>
+			 $("#no").keypress( function(event, args){
+			 	// $("#output").html(event.which);
+			 	if(event.which>=48 && event.which<=57)
+			 	   return true;
+			 	   
+			 	 return false;  
+			 });
+		</script>
+
+
+Creating new DOM
+=============================================================
+$("<tagName>") syntax returns newly created dom and later you can append it with existing dom with the help of one of the two methods.
+
+  existingDom.append( newDom );
+  newDom.appendTo( existingDom );
+
+
+Example:
+
+  <div id="output"></div>
+
+  <script>
+      var button = $("<input>").attr('type','submit');
+      
+      $("#output").append(button);
+
+      $("<h1>").html("Hello World").appendTo("#output");
+   </script>
+  
+Example: Add new dom on event of button click.
+
+                <ul id="output"></ul>
+		<p>
+			Enter city :
+			<input type="text" id='city'/>
+			<a href="#" id="buttonAdd">Add</a>
+		</p>
+
+		<script>
+			$("#buttonAdd").click( function(){
+				var name = $("#city").val();
+				$("<li>").html(name).appendTo("#output");
+			});
+		</script>
+
+
+Example: Add / delete doms
+
+<ul id="output"></ul>
+		<p>
+			Enter city :
+			<input type="text" id='city'/>
+			<a href="#" id="buttonAdd">Add</a>
+		</p>
+
+		<script>
+			$("#buttonAdd").click( function(){
+				 var li = $("<li>");
+				 $("<span>").html( $("#city").val() ).appendTo(li);
+				 var button = $("<input>").attr('type','button').attr('value','Delete');
+				 button.appendTo(li);
+				 button.click ( myClosure(li) );
+				 li.appendTo("#output");
+			});
+			
+			function myClosure(obj){
+				return function(){
+					obj.remove();
+				}
+			}
+		</script>
+
+

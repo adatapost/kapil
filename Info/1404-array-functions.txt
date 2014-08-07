@@ -1,0 +1,381 @@
+Array functions
+------------------------------------------------------------
+1. count($array) -- Returns count of array elements
+2. sizeof($array) - Returns count of array elements.
+
+  $array = array(10,20,30);
+  echo "<br/>", count($array);
+  echo "<br/>", sizeof($array);
+
+3. array_change_key_case(array,CASE_UPPER or CASE_LOWER) - Change the 		key case.
+
+   $array = array("no"=>10,"Name"=>"Rajesh");
+   $brray = array_change_key_case($array,CASE_LOWER);
+   print_r($brray); 
+
+ 
+
+4. array_chunk(array,size) -- Return two dim array of given "size".
+
+   $nos = array(10,20,30,40,50,60,70);
+   $array = array_chunk($nos, 5);
+   print_r($array);
+
+
+5. array_combine($keys,$values) -- Returns an array which uses keys from $keys array for given $values array.
+
+ 
+   $key = array("a","b","c","d");
+   $nos = array(10,20,30,40);
+   
+   $array = array_combine($key, $nos);
+   print_r($array);
+   
+6. array_count_values ($array) - returns count of each element (value)
+
+   $nos = array(10,20,10,20,30);
+   
+   $ar = array_count_values($nos);
+   print_r($ar);
+
+7. array_diff($array1,$array2) --- Returns an array whose contains will    be $array1 - $array2.
+
+   $no1 = array(10,20,30);
+   $no2 = array(10,20);
+   
+   $no3 = array_diff($no1, $no2);
+   print_r($no3);
+ 
+8. array_diff_assoc($array1,$array2) -- Returns elements from array1 which are not exists in array2.
+
+  $array1 = array("no"=>10,"name"=>"Raj");
+   $array2 = array("age"=>10,"name"=>"Raj");
+   
+   $ar = array_diff_assoc($array1, $array2);
+   print_r($ar);
+ 
+ 
+  array_diff_assoc(array_diff_assoc($array1, $array2),$array3);
+
+9. array_diff_uassoc(arr1,arr2,function($key1,$key2) {
+      return true_or_false;
+   })
+
+   Returns a new array that include elements from array1 where user-   defined function returns true.
+
+  $array1 = array(10,20,30);
+  $array2 = array(10,"Raj");
+
+  $ar = array_diff_uassoc($array1, $array2, function($e1,$e2){
+         if($e1 == $e2)
+		    return false;
+		 return true;
+  });
+   
+  print_r($ar);
+ 
+
+10. array_diff_ukey() -- compare keys and return element from 1st array      if function returns true.
+
+ <?php
+  $array1 = array(20=>10,20,30);
+  $array2 = array(10,"Raj");
+
+  $ar = array_diff_ukey($array1, $array2, function($key1,$key2){
+  	 if($key1 == $key2)
+	   return false;
+	  return true;
+  });
+  
+  print_r($ar);
+
+11.  array_fill(start_index, total_element, value) -- Fill all element       value with given "value".
+
+  $nos =  array_fill(0, 10, null);
+  print_r($nos);
+
+12. array_fill_keys( array(keys), value) -- Returns new array containing associate element with given value.
+
+  $ar = array_fill_keys(array("no","name"),"N.A");
+  print_r($ar);
+
+
+13. array_filter( array, function(ele) { }) -- Filter array elements.
+
+
+ $pos = array_filter( $array1, function($ele){
+ 	return $ele>0;	
+ });
+ 
+ print_r($pos);
+  
+
+14.  array_flip($array) -- Change key to value and vice-versa.
+
+ print_r(array_flip($array1));
+
+ 
+15. array_intersect($array1,$array2) -- returns an array which contains intersect elements (common to both array).
+
+  $array1 = array(10,20,30);
+  $array2 = array(10,40,30);
+  
+  print_r(array_intersect($array1, $array2));
+
+
+
+16. array_key_exists("key",array) -- Returns true if given key exists in an array.
+
+  $array1 = array("no"=>10,"age"=>20);
+  if(!array_key_exists("name", $array1))
+      $array1["name"] = "Raj";
+  
+  print_r($array1);
+
+17.    array_keys(array) -- Return an array of keys
+
+ print_r(array_keys($array1));
+
+18. array_map( function(ele) {} , array) -- The callback will be executed on each array element and you can return simple or complex data value which will be returned as an array.
+
+  $array1 = array(10,2,3,4,5);
+  
+   $ar = array_map( function($ele){
+   	  echo "<br/>", $ele;	
+	  return $ele*$ele;
+   },$array1);
+ 
+  print_r($ar);  // array contains square of each element 
+
+
+Ex1:
+
+  $array1 = array(10,2,3,4,5);
+  
+   $ar = array_map( function($ele){
+	  return array($ele,$ele*$ele,$ele*$ele*$ele);
+   },$array1);
+ 
+  print_r($ar);
+ 
+Ex2:
+
+<?php
+   
+  
+  $arrays = array(
+    array("gender"=>1,"name"=>"Raj"),
+    array("gender"=>0,"name"=>"Jyoti"),
+    array("gender"=>1,"name"=>"Mohan"),
+  );
+
+  
+  $ar = array_map( function($ele){
+	  return array(
+	       "salute"=>($ele['gender'] ? "Mr" : "Miss"),
+	       "name"=>$ele["name"]);
+   },$arrays);
+ 
+  print_r($ar);
+
+19. array_merge(array1,array2) -- Merge the elements of two array and return that single one.
+
+   print_r(array_merge( array(10,20),array(10,20,40)));
+
+
+20. merge more than two arrays.
+
+print_r(array_merge_recursive( array(1,2),array(2,3),array(3,4,5)));
+
+
+21. asort($array, flag) -- Sort associate arrays.
+
+$array1 = array("no"=>10,"age"=>2,"name"=>"Raj");
+asort($array1,SORT_STRING ^ SORT_DESC);
+print_r($array1);
+ 
+
+22. usort(array, function(ele1,ele2) {}) - User-defined array sort function uses used-defined compare function which returns,
+
+    0 if ele1 == ele2
+   >0 if ele1 > ele2
+   <0 if ele1 < ele2
+
+
+ $array1 = array(10,20,2,3,-55,6,7,8,9);
+  
+ $ar = usort($array1,function($e1,$e2){
+ 	 if($e1 == $e2) return 0;
+	 if($e1 < $e2) return 1;
+	 return -1;
+ });
+ 
+ print_r($array1);
+
+
+23. array_mutisort($multi-dim-array) -- Sort multi-dim array.
+
+  $arrays  = array(
+  array(10,"Rajesh",9000),
+  array(1,"Xajesh",1000),
+  array(40,"Majesh",3000),
+  array(2,"Lajesh",3000),
+ );
+ array_multisort($arrays,SORT_DESC);
+ 
+ print_r($arrays);
+
+Example:
+
+<?php
+ $arrays  = array(
+  array("Mehesana","North",9000),
+  array("Patan","North",9000),
+  array("Mehesana","East",9100),
+  array("Patan","West",9000),
+  array("Mehesana","North",9500),
+  array("Mehesana","South",9000),
+   array("Mehesana","East",100),
+   
+ );
+ array_multisort($arrays,SORT_DESC);
+ 
+ print_r($arrays);
+ 
+ 
+24. array_pad(array,size,value) -- append "value" to the "array" of given "size".
+
+$ar = array_pad($arrays, 10, 100);
+print_r($ar);
+
+25. array_push(array,value)
+26. array_pop(array)
+
+    Push and pop the element into/from an array.
+
+<?php
+ $nos  = array();
+ $no = 10;
+ array_push($nos,$no);
+ array_push($nos,20);
+ //array_push($no,20);
+ print_r($nos);
+ 
+ echo "<br/>", array_pop($nos);
+ echo "<br/>", array_pop($nos);
+  print_r($nos);    
+
+
+27. array_product(array) - returns product of all elements.
+28. array_reverse($array) -- reverse elements
+
+ $array = array(2,3,4);
+ echo array_product($array);
+  print_r(array_reverse($array));
+
+29. array_rand(array) -- returns the random index of any element from an array.
+
+   $array = array(2,3,4);
+ 
+  echo $array[array_rand($array)];
+
+
+30. array_reduce($array, function($var, $ele){}, init_value_for_$var);
+
+    It returns single value of "$var" from the callback.
+
+ $array = array(2,3,4,2,4,44,22,11,2);
+ 
+  $sum =  array_reduce($array, function($sum,$ele){
+  	if($ele>=1 && $ele<=10)
+  	   return $sum + $ele;
+	return $sum;
+  },0);
+  
+  echo $sum;
+
+
+31.array_replace(array_to_be_replace,array_whose_elements_are_extracted)
+
+   
+ $array = array(10,20);
+ 
+ $ar = array_replace($array,array("A","B","D"));
+ 
+ print_r($ar);
+
+32. array_search(value, array) -- Returns a key/index if value exists in an array.
+
+ $array = array(10,20,60,70);
+ 
+ echo array_search(60,$array);
+
+33. array_shift(array) - returns first element
+
+ $array = array(20,60,70);
+ 
+echo array_shift($array);
+
+34.  array_slice(array, start_index, length) -- Returns an array taht contains elements from start_index to start_index  + length.
+
+
+ $array = array(10,20,30,40,50,60,70);
+ 
+ $ar = array_slice($array, 2,4);
+ print_r($ar);
+ 
+
+35. array_splice(array,start_index, length, value) 
+
+ To insert a new element
+
+     array_splice(array,start_index,0, newvallue); // length must be 0
+
+
+ To delete an element
+
+    array_splice(array, delete_index,length); // do not specify value
+					      
+
+ To update an element
+
+   array_splice(array,update_index,length, newvalue);
+
+Example:
+
+<?php
+  $array = array(10,20,30,40,50,60,70);
+ 
+  //delete at 2 index (30)
+  //
+  array_splice($array,2,1);
+  
+  print_r($array);
+  
+  //insert at 0 index 
+  array_splice($array,0,0,90);
+  
+  print_r($array);
+  
+ //update at 0 index 
+  array_splice($array,4,1,9000);
+  
+  print_r($array);
+ 
+ 
+36. array_udiff(array1,array2,callback) -- Returns an array contains different of two array using callback function.
+
+$array1 = array(10,50,60,70);
+  $array2 = array(60,70);
+ 
+   $ar = array_udiff($array1, $array2, function($e1,$e2){
+   	  echo "<br/>",$e1, " " , $e2;
+	  if($e1 == $e2) return 0;
+	  if($e1 > $e2) return 1;
+	  return -1;
+   });
+   
+   print_r($ar);
+
+
+

@@ -1,0 +1,100 @@
+Persist data/state across the requests & responses
+--------------------------------------------------------------------
+Basically HTTP is stateless protocol it means no data/state will be persisted between requests/responses either at client or server machine. So each request will be considered as new or fresh request.
+
+
+In business application, saving the identity and state of client is important because every transaction is depends upon client's previous request.
+
+To save the identity and data (state), we must have to use either "Session" or "Cookie" mechanism. The "Session" saves user's identity and data into "Server memory" where as "Cookie" saves user's identity and data into "web-browser's environment" (ie. client machine).
+
+Session
+=======
+When we request the any resource of webapp very first time, the application server creates an object called "Session" and this "session" object remains alive till that web-browser where first request was sent is not closed.
+
+
+The application server creates a 'session' object and returns session-identity to the web-browser by pushing sessionId value into cookie so on next subsequent request, the session-id from cookie will be received by application server and that way it determines the user's identity.
+
+How to enable the session into page?
+------------------------------------
+
+Call the "session_start()" at the begin of .php page to enable the 'session' object for this current page.
+
+<?php
+  session_start(); 
+
+After enabling session, you can set/get/remove data from/into session,
+
+Use $_SESSION to set data
+---------------------------
+<?php
+  session_start();
+  $_SESSION['no'] = 10;
+  $_SESSION['name']='Raj';
+
+To read session data
+----------------------
+<?php
+  session_start();
+  if(isset($_SESSION['no')) {
+       $no = $_SESSION['no'];
+   }
+   ...
+
+To delete session data
+------------------------
+<?php
+  session_start();
+  if(isset($_SESSION['no')) {
+       unset($_SESSION['no']);
+   }
+   ...
+
+Cookie
+------
+
+ Cookie is key-value pair object that is managed by the web-browser. It means web-browser creates, deletes, updates cookie. Web-browser sends cookie to web-server on each request.
+
+
+To create a cookie
+-------------------
+ 
+  setcookie(name,value,expire_time,path)
+
+  If expire_time is null then web-browser creates non-persistent cookie     - it means cookie will be removed automatically when we close the       browser. 
+
+ If expire_time is > current_time then cookies will be created as "persistent - disk file". Max expire datetime must be 1 year from the current datetime.
+
+ If expire_time is < current_time (i.e past time) then web-browser deletes cookie immediately.
+
+ 
+Temparory or non-persistent cookie
+----------------------------------
+<?php
+ $name = "no";
+ $value = "10";
+ $expire = null;
+ $path ="/";
+ setcookie($name,$value,$expire,$path);
+?>
+
+Persistent cookie
+-----------------
+
+<?php
+ $name = "no";
+ $value = "10";
+ $expire = time() + 60 * 60 * 24 * 7; //7 days
+ $path ="/";
+ setcookie($name,$value,$expire,$path);
+?>
+
+Delete a cookie
+---------------
+<?php
+ $name = "no";
+ $value = "10";
+ $expire = time() - 60 * 60 ; //Past time
+ $path ="/";
+ setcookie($name,$value,$expire,$path);
+?>
+

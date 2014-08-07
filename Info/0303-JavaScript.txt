@@ -1,0 +1,273 @@
+Example: Event bubble
+
+         Event bubble up mechanism capture and raise the events of "parent" container when event raises by its children.
+
+<div onclick="doIt(this)">
+  <p>Para1</p>
+  <input type="button" value="button1"/>
+  <h1>Heading1</h1>
+</div>
+<script>
+ function doIt(obj) {
+ 	console.log('Clicked',obj);
+ }
+</script>
+
+Example: Determine which element has raises an event in side the container (parent).
+
+To achieve this, we need to handle event programatically by placing "eventArgument".
+
+
+  For example:
+
+      element.onxxxxxxx = function(e) {};
+
+               <div id="output">
+			<p>Para1</p>
+			<input type="button" value="button1"/>
+			<h1>Heading1</h1>
+		</div>
+		<script>
+		   var output = document.getElementById("output");
+		   
+		   output.onclick = function(e){
+		   	  console.log(e.srcElement.tagName);
+		   	   if(e.srcElement.tagName == "H1") {
+		   	   	 console.log("H1 is pressed");
+		   	   }
+		   };
+		</script>
+
+Example: Apply "CSS" class to selected element using event bubble technique.
+
+
+                <div id="output">
+			<p>Para1</p>
+			<input type="button" value="button1"/>
+			<h1>Heading1</h1>
+		</div>
+		<style>
+			.red {
+				color:red;
+				border:1px solid red;
+				padding:4px;
+			}
+		</style>
+		<script>
+		   var output = document.getElementById("output");
+		   
+		   output.onclick = function(e){
+		   	   e.srcElement.setAttribute("class","red");
+		   };
+		</script>
+
+Example: Add or remove "class" -- toggle
+
+<div id="output">
+			<p>Para1</p>
+			<input type="button" value="button1"/>
+			<h1>Heading1</h1>
+		</div>
+		<style>
+			.red {
+				color:red;
+				border:1px solid red;
+				padding:4px;
+			}
+		</style>
+		<script>
+		   var output = document.getElementById("output");
+		   
+		   output.onclick = function(e){
+		   	  if(e.srcElement.getAttribute("class"))
+		   	    e.srcElement.removeAttribute("class");
+		   	   else
+		   	   e.srcElement.setAttribute("class","red");
+		   };
+		</script>
+
+
+Array and its functions
+=================================================
+
+arrayVar.push(value) -- Insert at the end of array
+arrayVar.pop()       -- Remove recently added 
+arrayVar.splice(index,mode,value) 
+           value 0 for insert mode
+           value 1 for replace/delete mode
+
+
+     Insert at 0th index
+
+        arrayVar.splice(0,0,"New Value");
+
+     Insert at 5th index
+
+        arrayVar.splice(5,0,"New Value");
+
+        Replace "Hello" at 0th index
+
+        arrayVar.splice(0,1,"Hello");
+ 
+       Delete at 0th index
+
+        arrayVar.splice(0,1);
+
+Example:
+
+<input type="text" id="name"/>
+		<input type="button" value="Add" onclick="addCity()"/>
+		<input type="button" value="Add" onclick="addFirst()"/>
+		Enter array index : <input type="text" id="index"/>
+		<input type="button" value="Add" onclick="removeCity()"/>
+		<script>
+		   var cities = [];
+		   
+		   function addCity(){
+		   	 var cityValue  = document.getElementById("name").value;
+		   	 
+		   	 cities.push(cityValue); //append it to array
+		   	 console.log(cities);
+		   }
+		    function addFirst(){
+		   	 var cityValue  = document.getElementById("name").value;
+		   	            //0 - index
+		   	            //0 - insert mode (1 for replace mode)
+		   	            // value - insert/replace value
+		   	 cities.splice(0,0,cityValue); 
+		   	 console.log(cities);
+		   }
+		   function removeCity(){
+		   	 var index  = document.getElementById("index").value;
+		   	 
+		   	 cities.splice(index,1);
+		   	 console.log(cities);
+		   }
+		</script>
+ 
+
+arrayVar.sort() -- To sort elements
+
+arrayVar.forEach( function(value, index) {
+    //statement
+}); 
+
+<script>
+		   var cities = ["Mehsana","Ahmedabad","Rajkot","Surat","Visnagar","Amroli"];
+		   
+		   cities.sort(cities);
+		   console.log(cities);
+		   
+		   cities.forEach( function(value, index){
+		   	  console.log(index, value);
+		   }); 
+		</script>
+
+Example: Add or remove elements from array and DOM.
+
+<select id="city"></select>
+		 <a href="#" onclick="delCity()">Delete</a>
+		<script>
+		   var cities = ["Mehsana","Ahmedabad","Rajkot","Surat","Visnagar","Amroli"];
+		   var city = document.getElementById("city");
+		   
+		   cities.sort(cities);
+		 
+		   
+		   cities.forEach( function(value, index){
+		   	   var op = document.createElement("option");
+		   	   op.setAttribute("value",index);
+		   	   op.innerHTML = value;
+		   	   city.appendChild(op);
+		   }); 
+		   
+		   function delCity() {
+		   	  
+		   	   cities.splice(city.value,1); //Remove from array
+		   	    city.remove(city.value); //Remove the DOM
+		   	   console.log(cities);
+		   }
+		</script>
+
+Example: add, delete and update cities
+
+                <ul id="city"></ul>
+		 <a href="#" onclick="addCity()">Add</a>
+		 <style>
+		 	li span {
+		 		display:inline-block;
+		 		width:300px;
+		 	}
+		 </style>
+		<script>
+		   var cities = ["Mehsana","Ahmedabad","Rajkot","Surat","Visnagar","Amroli"];
+		   var city = document.getElementById("city");
+		   cities.forEach( function(value, index){
+		   	   var li = document.createElement("li");
+		   	   
+		   	   var span = document.createElement("span");
+		   	   span.innerHTML =value;
+		   	   
+		   	   span.onclick = function(){
+		   	   	  span.contentEditable = true;
+		   	   };
+		   	   span.onkeypress= function(e){
+		   	   	   if(e.which == 13){
+		   	   	     span.contentEditable = false;
+		   	   	     cities[index]= span.innerHTML;
+		   	   	    }
+		   	   };
+		   	   
+		   	   var link = document.createElement("a");
+		   	   link.setAttribute("href","#");
+		   	   link.innerHTML = "X";
+		   	   link.onclick = function(){
+		   	   	  console.log(index);
+		   	   	  li.remove(index);
+		   	   };
+		   	   
+		   	   li.appendChild(span);
+		   	   li.appendChild(link);
+		   	   
+		   	   city.appendChild(li);
+		   }); 
+		   
+		   function addCity(){
+		   	   cities.push("");
+		   	   var index = cities.length - 1;
+		   	   
+		   	   var li = document.createElement("li");
+		   	   
+		   	   var span = document.createElement("span");
+		   	   span.innerHTML ="click here";
+		   	   
+		   	   span.onclick = function(){
+		   	   	  span.contentEditable = true;
+		   	   };
+		   	   span.onkeypress= function(e){
+		   	   	   if(e.which == 13){
+		   	   	     span.contentEditable = false;
+		   	   	     cities[index]= span.innerHTML;
+		   	   	    }
+		   	   };
+		   	   
+		   	   var link = document.createElement("a");
+		   	   link.setAttribute("href","#");
+		   	   link.innerHTML = "X";
+		   	   link.onclick = function(){
+		   	   	  console.log(index);
+		   	   	  li.remove(index);
+		   	   };
+		   	   
+		   	   li.appendChild(span);
+		   	   li.appendChild(link);
+		   	   
+		   	   city.appendChild(li);
+		   }
+		</script>
+
+
+Example: Change cell (td) color of clicked of <table>.
+
+Example: Add row <tr><td></td>....</tr> when addButton is clicked.
+

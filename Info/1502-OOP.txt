@@ -1,0 +1,223 @@
+Constructor method
+====================================================================
+Constructor is the instance method of class which is called when we creates an object (or instance).
+
+In PHP you can define constructor method:
+ 
+  1. Using same class name as method name Or
+  2. Using __construct() (two times underscrore)
+
+Example:
+
+<?php
+  
+ class Test
+ {
+ 	 function Test()  // or __construct
+	 {
+	 	echo "This is constructor";
+	 }
+ }
+ 
+ $t1 = new Test;
+ $t2 = new Test(); 
+?>   
+ 
+ 
+Constructor is mainly used to write object specific initialization code or startup code.
+
+Example:
+
+<?php
+  class Product {
+  	 var $id, $name,$rate,$qty;
+	 
+	 function Product($id=0, $name="",$rate=0.0,$qty=0){
+	 	$this->id = $id;
+		$this->name= $name;
+		$this->rate = $rate;
+		$this->qty = $qty;
+	 }
+	 function printIt() {
+	 	echo "<br/>", $this->id, $this->name, $this->rate, $this->qty, ($this->rate*$this->qty);
+	 }
+  }  
+  
+  
+  $p1 = new Product;
+  $p1->id = 10;
+  $p1->name = "Pencil";
+  $p1->rate = 4.5;
+  $p1->qty = 10;
+  $p1->printIt();
+  $p2 = new Product(11,"Pen",6,6);
+  $p2->printIt();
+  
+?>   
+ 
+ 
+Access modifiers 
+============================================================
+Three access modifiers -- public, private and protected. If none of them is specified then it will be considered as "public".
+
+public - These entities have no restriction. They can be access 	anywhere.
+
+private - These entities are only visible inside the class in which 	 they are created/defined.
+
+protected - These entities are only visible inside the class in which 	    they are created or their sub-classes.
+
+Example:
+
+<?php
+   class Test
+   {
+   	private $no =10;
+	protected $no1 =102;
+	public $no2 = 20;
+   }
+   class Best extends Test
+   {
+   	 function testIt() {
+   	 	$no1 = 2000;
+   	 }
+   }
+   $t = new Test;
+  // $t->no = 100;  // Error - cannot accessible
+   //$t->no1 = 200; //error - not accessible
+   $t->no2= 300;
+   
+   $b = new Best;
+   $b->testIt();
+   
+   var_dump($t);
+   var_dump($b);
+?>   
+ 
+ 
+Common practice to define class or function files
+=============================================================
+Never close the PHP tag while creating classes or function files because they are used (or include) by one or more program files and closing ?> tag might stop the code render.
+
+
+Always keep single class definition per PHP file.
+
+Use file system folder to organize the classes physically.
+
+ For example:
+
+    Avd/system
+               Config.php
+    Avd/model
+               Config.php
+    Avd/controller
+
+
+
+Example:
+
+/webapp/
+       |
+       |-----/lib
+             |
+             |--------/meet
+                        Team.php
+			Main.php
+
+
+       | test.php
+
+
+Team.php
+---------
+<?php
+ class Team {
+ 	var $id, $title, $location, $time;
+	
+	public function Team($id = 0 , $title = '', $location = '', $time= '') {
+		$this->id = $id;
+		$this->time = $time;
+		$this->location = $location;
+		$this->title = $title;
+	}
+ }
+    
+Main.php
+--------
+<?php
+  class Main {
+  	public static function post($key) {
+  		if(isset($_POST[$key]))
+		  return $_POST[$key];
+		return "";
+  	}
+  }
+  
+
+test.php
+---------
+<?php
+    
+    require_once 'lib/meet/Main.php';
+    require_once 'lib/meet/Team.php';
+	
+	
+	$t = new Team(0+Main::post("id"),Main::post("title"),Main::post("location"), Main::post("time"));
+	var_dump($t);
+?>   
+
+<form method="post">
+	<br/>Id : <input type="text" name="id" value="<?=$t->id?>"/>
+	<br/>Title: <input type="text" name="title" value="<?=$t->title?>"/>
+	<br/>Location : <input type="text" name="location" value="<?=$t->location?>"/>
+	<br/>Time : <input type="text" name="time" value="<?=$t->time?>"/>
+	<br/><input type="submit"/>
+</form>
+ 
+Example: Collection of objects
+
+Add "Teams.php" class into "lib/meet" folder:
+
+ <?php
+ 
+ class Teams {
+ 	var $teams = array();
+	public function addTeam($team) {
+		$this->teams[]=$team;
+	}
+	public function removeTeam($index) {
+		unset($this->teams[$index]);
+	}
+	public function printTeams(){
+		foreach ($this->teams as $team) {
+			echo "<br/>", $team->id, $team->title, $team->location,$team->time;
+		}
+	}
+ }
+
+And test it:
+
+test1.php
+------------
+<?php
+    
+    require_once 'lib/meet/Main.php';
+    require_once 'lib/meet/Team.php';
+     require_once 'lib/meet/Teams.php';
+	
+	
+	 $teams = new Teams;
+	 $teams->addTeam(new Team(1,"Team1","Meh","10:20 AM"));
+	 $teams->addTeam(new Team(2,"Team2","Meh","10:20 AM"));
+	 $teams->addTeam(new Team(3,"Team3","Pat","10:20 PM"));
+	 
+	 $teams->printTeams();
+	 $teams->removeTeam(0);
+	 $teams->printTeams();
+	 
+	 $t=new Teams;
+	 $t->addTeam(new Team(1,"A","@","3"));
+	 $t->printTeams();
+?>   
+
+
+

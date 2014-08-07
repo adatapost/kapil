@@ -1,0 +1,128 @@
+PHP DataTime class library
+=====================================================================
+
+PHP has lots of date and time functions but they are scattered. 
+
+For example,
+
+ echo "<br/>", date('d-m-Y H:i:s P T',0);
+ echo "<br/>", time();
+ 
+The date(format) function returns string representation of current system date and time() returns timestamp but what we need is to store Date or time in DateTime type instead of string or integers.
+
+The PHP DateTime library has four classes - DateTime, DateTimeZone, DateInterval and DatePeriod. All four classes offers the same functionalities offered by date and time functions but more accurately and more pragmatic.
+
+
+Example: Returns an instance of DateTime which represent system's current datetime.
+
+  $now = new DateTime;
+  echo "<br/>", $now->format('D M d-m-y Y h:i:s A P T');
+ 
+Example: Returns system datetime of "asia/kolkata" timezone.
+
+ 
+  $now = new DateTime(null,new DateTimeZone('asia/kolkata'));
+  echo "<br/>", $now->format('d-m-y Y h:i:s A P T');
+
+Example: Returns user-define datetime instance
+
+  $nowIst = new DateTime('31-12-2014 10:20:33 PM',new DateTimeZone('asia/kolkata'));
+  echo "<br/>", $nowIst->format('d-m-y Y h:i:s A P T');
+ 
+  $nowUtc = new DateTime('31-12-2014 10:20:33 PM');
+  echo "<br/>", $nowUtc->format('d-m-y Y h:i:s A P T');
+ 
+Example: 
+
+<?php
+  $str = "31-1-2003";
+  $nowIst = new DateTime($str,new DateTimeZone('asia/kolkata'));
+  echo "<br/>", $nowIst->format('M-Y');
+
+Example: List timezones and display datetime
+
+<?php
+  foreach(DateTimeZone::listIdentifiers() as $id){
+  	$dt = new DateTime(null,new DateTimeZone($id));
+  	echo "<br/>$id " . $dt->format('d-m-Y H:i:s T P');
+  }
+ 
+
+
+Example: add() or sub() date interval
+
+DateInterval class receive interval-specification format as bellow:
+
+     PxYxMxDTxHxMxS
+     ^      ^
+     |       |-------- Time
+
+  Part or Period
+
+Example:
+
+ <?php
+   $dt = new DateTime('31-1-2014');
+   $interval = new DateInterval('P10D'); //10 days
+   $dt->add($interval);
+   echo "<br/>" . $dt->format('d-m-Y h:i:s A T P');
+
+Example: Add 1 year 3 month 6 days
+ <?php
+   $dt = new DateTime('31-1-2014');
+   $interval = new DateInterval('P1Y3M6D');  
+   $dt->add($interval);
+   echo "<br/>" . $dt->format('d-m-Y h:i:s A T P');
+
+Example: subtract 1M 5 Hours
+
+ <?php
+   $dt = new DateTime('31-1-2014');
+   $interval = new DateInterval('P1MT5H');  
+   $dt->sub($interval);
+   echo "<br/>" . $dt->format('d-m-Y h:i:s A T P');
+
+Example: Difference between two datetime objects.
+
+<?php
+   $dt1 = new DateTime('31-1-2001');
+   $dt2 = new DateTime;
+   
+   $diff = $dt1->diff($dt2);
+   
+   var_dump($diff);
+   
+   echo "<br/>Total days " . $diff->days;
+   echo "<br/>Total years " . $diff->y;
+   
+DatePeriod - Returns datetime objects between two datetime as per given DateInterval specification.
+
+Example: Returns Date between start and end whose interval is 90 days.
+
+<?php
+  $start = new DateTime('15-3-2010');
+  $end = new DateTime('31-3-2014');
+  
+  $int = new DateInterval('P90D');
+  
+  $dates = new DatePeriod($start,$int,$end);
+  
+  foreach($dates as $d){
+  	echo "<br/>", $d->format('d-m-Y');
+  }
+   
+Example: 
+
+<?php
+  $start = new DateTime('15-8-1947');
+  $end = new DateTime('15-8-2040');
+  
+  $int = new DateInterval('P1Y');
+  
+  $dates = new DatePeriod($start,$int,$end);
+  
+  foreach($dates as $d){
+  	echo "<br/>", $d->format('D d-m-Y');
+  }
+   
+   

@@ -1,0 +1,127 @@
+PHP Graphics Library - GD 
+==================================================================
+To draw/paint on-fly graphics using PHP code, we will us "gd - graphics device" library.
+
+Create brand-new image and display on web-page
+----------------------------------------------
+ 
+gd.php
+-------
+<?php
+   
+    $width = 300;
+	$height = 200;
+	
+	//1. creates an image
+    $image = imagecreate($width, $height);
+	
+	//2. fill the background
+	
+	$background = imagecolorallocate($image, 255, 255, 255);
+	
+	//obtain forecolor
+	$red = imagecolorallocate($image, 255,0, 0);
+	$blue = imagecolorallocate($image, 0,0, 255);
+	$green = imagecolorallocate($image, 0, 255,0);
+	
+	imagerectangle($image, 10, 10, $width-10, $height-10, $red);
+	imageline($image, 10, 10, $width-10, $height-10, $blue);
+	imageellipse($image, $width/2, $height/2, 100, 100, $green);
+	imagefill($image, 20, 100, imagecolorallocate($image, 230, 255,0));
+	imagefill($image, 130, 130, imagecolorallocate($image, 230, 25,220));
+	
+	//3. Render primitives 
+	
+	//4. write off to web-browser
+	
+	header("content-type: image/png");
+	imagepng($image);
+	
+To show image,
+ 
+
+   1.  http://localhost/sitename/gd.php
+
+   2.  sample.php
+
+ <!doctype html>
+
+<h1>Fig1</h1>
+<img src="gd.php"/>
+<h1>Fig2</h1>
+<img src="gd.php"/>
+
+
+Example: Write text
+
+
+<?php
+   
+    $width = 500;
+	$height = 100;
+	
+	//1. creates an image
+    $image = imagecreate($width, $height);
+	
+	//2. fill the background
+	
+	$background = imagecolorallocate($image, 255, 255, 255);
+	
+	//obtain forecolor
+	$red = imagecolorallocate($image, 255,0, 0);
+	$blue = imagecolorallocate($image, 0,0, 255);
+	$green = imagecolorallocate($image, 0, 255,0);
+	
+	imagerectangle($image, 10, 10, $width-10, $height-10, $red);
+	 
+	//3. Render primitives 
+	 $size= 20;
+	 $angle = 0;
+	 $x = 20;
+	 $y = 80;
+	 $fontfile = 'c:\windows\fonts\Arial.ttf';
+	 $text = 'Hello World';
+	 
+	 imagettftext($image, $size, $angle, $x, $y, $green, $fontfile, $text);
+	
+	//4. write off to web-browser
+	
+	header("content-type: image/png");
+	imagepng($image);
+	
+Example: Load an image file
+
+<?php
+    
+        $fileName = 'sample.jpg';
+	$image = imagecreatefromjpeg($fileName);  
+	
+	imageellipse($image, 50, 20, 100, 100, imagecolorallocate($image, 255, 12, 2));
+	header("content-type: image/jpeg");
+	imagejpeg($image);
+	
+Example: Resize the image
+
+<?php
+    
+    $fileName = '7.jpg';
+	$image = imagecreatefromjpeg($fileName);  
+	$width = 200;
+	$height = 100;
+	
+	if(isset($_GET['w'])){
+		$width = 0 + $_GET['w'];
+	}
+	if(isset($_GET['h'])){
+		$height = 0 + $_GET['h'];
+	}
+	 $newImage = imagecreatetruecolor($width, $height);
+	
+	
+	imagecopyresampled($newImage, $image, 0, 0, 0, 0, $width, $height, imagesx($image), imagesy($image));
+	
+	
+	header("content-type: image/jpeg");
+	imagejpeg($newImage);
+	
+

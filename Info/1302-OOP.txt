@@ -1,0 +1,91 @@
+PHP 5 and Object Oriented Paradigm
+======================================================================
+ 
+PHP 4 version was not OO and hence PHP5 introduce some of the keywords which are not exists in PHP4.
+
+
+1. class keyword - To define a new class
+2. public, private and protected -- These are access modifiers to set 
+				    visibility of class members
+3. static - To define a regular function inside the class. 
+4. extends - To inherit traits of existing class
+5. implements - To implements interfaces
+6. __construct() -- It is a name of constructor function in class
+7. __destruct() -- It is a name of destructor function in class
+8. new - new keyword creates an object (allocates memory for class's          instance fields)
+
+9. $this - It is reference variable and hold reference of actice or            current object.
+
+10. self - It is used to refer the static members within the class.
+
+11. parent - It is used to refere the super class's members in sub-             class.
+12. var   - var keyword is similar as public modifier to define 
+		data members in class.
+
+
+class and class members
+===================================================================
+It is good practice to use "PascalCaseName" (Capitalize the first letter of each word).
+
+A class definition contains two types of members:
+
+ 1. instance (object) members -- Members which are invoked or used by
+				 the object reference.
+
+ 2. static members	      -- members are invoked or used by
+				 class name.
+
+
+
+instance members
+-----------------
+
+To invoke or use instance members outside the class, we have to create an object and use -> (arrow) operator.
+
+To invoke or use instance members inside the class, we must have to use $this reference and -> operator.
+
+static members
+---------------
+To invoke or use static members outside the class, we have to use ClassName::MemberName syntax. :: is called scope resolution operator.
+
+To invoke or use static members inside the class, we can use ClassName::MemberName or self::MemberName syntax.
+
+
+Example:
+
+ $name = "ABC";
+ class Test
+ {
+ 	var $no;  //instance 
+	static $no1; //static
+	
+	function printIt() {
+		echo "<br/>" , $this->no;
+	}
+	
+	static function testIt() {
+		global $name;
+		echo "<br/>", self::$no1;
+		echo "<br/>", Test::$no1;
+		echo "<br/>", $name;
+		
+		
+	}
+ }
+ 
+ Test::$no1 = 100;
+ 
+  $a = new Test;
+  $a->no =10;
+  
+  $b = new Test;
+  $b->no = 90;
+  
+   echo "<br/>", Test::$no1, $a->no , $b->no;
+   Test::testIt();
+   $a->printIt();
+   $b->printIt();
+?>   
+ 
+ 
+ 

@@ -1,0 +1,51 @@
+MySql Database and PHP APIs
+===================================================================
+
+1. MySql is open source (an commercial) product from Oracle Corp, USA.
+
+2. MySql product is installed when you setup WAMP or XAMPP
+
+3. Default instance of MySql server is : localhost (server name)
+	Administrator user name is     : root
+        and password is                :      (empty)
+
+4. There are number of client tools available to manage the database operations that includes -- "phpmyadmin" web tool and "mysql" command-line tool.
+
+
+To manage & design the database
+=================================
+
+1. open "localhost/phpmyadmin" url
+2. Select "Database" link where you can create or use (open) or drop    the databases.
+
+
+
+Commonly used field types in mysql
+-------------------------------------
+varchar - to store variable length string
+char	- to store fixed length string
+int	- to store number without decimal
+decimal - to store number with decimal
+bool or bit - to store 0 or 1 (true or false)
+Date	- To store date part
+DateTime - To store date and time
+blob	- binary large object  to store file content or object
+clob    - character large object to store large text or text files
+
+
+Example: 
+
+create table dept
+(
+  dept_id  int primary key,
+  dept_name varchar(50)
+ )
+
+create table emp
+(
+  emp_id int primary key,
+  emp_name varchar(50),
+  join_date date,
+  dept_id int,
+  foreign key (dept_id) references dept(dept_id)
+)

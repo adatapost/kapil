@@ -1,0 +1,110 @@
+Function
+====================================================================
+
+Function in PHP is defined using "function" keyword.
+
+General Syntax:
+  
+   function functionName(arguments....)
+    {
+       //statements
+     }
+
+1. PHP function takes as many argument you require
+2. PHP function returns a value by using "return" statement. The return    statement terminate the function execution too.
+3. Use "camelCase" pattern to name the function (best practice)
+4. PHP is dynamic language so it does not support function overloading.
+   [Overloading functions : There may be more than one same named         function having different parameters]
+5. PHP function arguments can be assigned by literal (constant) and    this technique is called "Default argument" function.
+
+
+Example:
+
+<?php
+ function add($no1, $no2)
+  {
+    echo "<br/>", $no1 + $no2;
+   }
+ function mul($no1, $no2)
+  {
+   return $no1 * $no2;
+   }
+
+ //call these functions
+
+  add(10,20);
+  add('Helo',20); //You can pass any type of data
+  
+  $result = mul(5,6);
+  echo "<br/>", $result;
+?>
+
+
+Accessing page variables in functions
+================================================
+In general, there is not direct way to use variables which are created outside the function within the function.
+
+<?php
+   $no = 10;
+    function test() {
+       echo $no; //error - 'no' is not defined
+    }
+
+  //call the function
+   test();
+?>
+
+In PHP we have two ways to use page variables in function:
+
+  1. global keyword and
+  2. $GLOBALS superglobal
+
+<?php
+   $no = 10;
+    function test() {
+       global $no;
+       echo $no;  
+    }
+
+  //call the function
+   test();
+?>
+
+OR
+<?php
+   $no = 10;
+    function test() {
+       
+       echo $GLOBALS["no"];  
+    }
+
+  //call the function
+   test();
+?>
+
+Default arguments
+==========================================================
+To achieve an effect of overloading (somewhat), we've default argument way.
+
+This way you can assign function's parameters from right to left direction.
+
+<?php
+  function calc($no1=10, $no2=10,$op = "+")
+   {
+     if($op == "+")
+         echo $no1+$no2;
+     else
+     if($op == "-")
+          echo $no1-$no2;
+    }
+
+   //call this function
+
+   calc();  //if parameters are not supplied then parameters have
+            //default value assigned at function definition
+
+   calc(20);
+   calc(44,55);
+   calc(33,44,"-");
+?>
+

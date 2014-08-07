@@ -1,0 +1,62 @@
+String functions
+=================================
+1. addcslashes($str,"char-seq") -- insert \ backslash 
+
+  $str = "Raj's home";
+  echo addcslashes($str,"'o");
+
+
+2.  addslashes($str) -- insert slash before single quote if exists.
+
+ echo "<br/>", addslashes($str);
+
+3. bin2hex(str) -- convert binary data to hexa decimal.
+
+4. hexdec("0xff") -- Returns decimal of given hexa.
+
+5. trim or chop -- remove leading or trailing chars.
+
+6. char(ascii) -- returns a char
+
+7.  base64_encode() - encode binary data
+8.  base64_decode() - decode the encoded
+9.  chunk_split( str, length, end = \r\n) -- Shorten the string width.
+
+   
+   $data = chr(1) . "" . chr(12) . "" . chr(10) . "" . chr(65) . chr(160);
+   echo $data;
+   echo "<br/>", chunk_split( base64_encode($data));
+  
+   
+   $data = file_get_contents('3.jpg');
+  echo "<br/>", chunk_split( base64_encode($data),20);
+  $encode = base64_encode($data);
+  echo "<br/>", base64_decode($encode);
+
+
+9. count_chars($str) - return count of each char.
+10. strlen($str) - returns length
+
+11. crypt($str) -- It uses DEC algo to obtain the hash of plain-text.
+
+ $str = "Hello";
+ $hash = crypt($str);
+ 
+ echo "<br/>",$hash;
+ 
+ echo "<br/>", crypt("Hello",$hash);
+
+12. sha1($str) -- alternatively we can obtain hash of plain-text
+13. md5($str)     but these techniques are not popular due to serious
+                  securities issue.
+
+14. explode(delim,str) -- split a string and returns an array.
+
+   print_r(explode(" ","10 20 30"));
+
+15. get_html_translation_table() - return list of html-entities.
+
+16. htmlentities() - convert special chars in HTML text into entities.
+
+17.    html_entity_decode($str); -- HTML entities to HTML char
+

@@ -1,0 +1,24 @@
+1. functions
+2. default argument
+3. class
+4. DateTime classes
+5. PDO database classes
+6. session & cookies
+7. Mail API - 
+8. GD API
+9. XML - DOM and  SAX - 
+10. JSON - 
+11. JavaScript DOM
+12. JQuery  -- Framework
+13. JQuery Validation - 
+14. JQuery UI  - 
+15. IO classes - 
+16. Regular Expression - 
+17. String functions
+18. Array functions
+19. Robot, .htaccess (Apache configuration) - 
+20. PDF library - 
+
+
+
+

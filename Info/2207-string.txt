@@ -1,0 +1,79 @@
+implode -- joins array elements using delim string.
+--------
+
+  implode(delim/seperator, array)
+  ----------------------
+
+  $array = array(10,20,30);
+  
+  $str = implode(" , ", $array);
+  echo $str;
+
+
+join() same as implode -- It is an alias (second name) of implode.
+-----
+
+
+lcfirst() - Lowercase the first letter 
+ucfirst() - Make a string's first character uppercase
+strtolower() - Make a string lowercase
+strtoupper() - Make a string uppercase
+ucwords() -- Capitalize the first letter of word.
+
+echo lcfirst("AmountSales");
+echo ucfirst("the red sun");
+echo strtolower("THE red sun");
+echo strtoupper("the red sun");
+echo ucwords("the red sun");
+
+
+levenshtein(str1,str2)  Returns count of char to be inserted/deleted 			from str1 while maching chars from str2.
+----------------------
+ $input = "thos";
+ 
+ $array = array("this","and","that","thise","those");
+ 
+ foreach($array as $a){
+ 	 echo "<br/>", levenshtein($input, $a);
+	 
+	 
+ }
+similar_text -- Returns count of equals char.
+--------------------------
+<?php
+
+ $input = "taht";
+ 
+ $array = array("this","and","that","thise","those");
+ $max = -1;
+ $word = "";
+ foreach($array as $a){
+ 	 //echo "<br/>", levenshtein($input, $a);
+	  echo "<br/>$input == $a", similar_text($input, $a);
+	  
+	  if(similar_text($input, $a)>$max) {
+	     $max = similar_text($input, $a);
+		  $word = $a;
+	  }
+ }
+ 
+ echo "<br/>: Match word would be : $word";
+
+
+soundex($str) -- Returns sound key which will be generated based upon                   the sound or pronounciation of the word.
+ 
+ echo "<br/>", soundex("heloo");
+ echo "<br/>", soundex("hello");
+ echo "<br/>", soundex("hallo");
+ echo "<br/>", soundex("please");
+ echo "<br/>", soundex("pleese");
+ echo "<br/>", soundex("gud");
+ echo "<br/>", soundex("good");
+
+
+metaphone($str) - returns meta-phonetic key of given word.
+
+
+ echo "<br/>", metaphone("gud");
+ echo "<br/>", metaphone("goood");
+ 

@@ -1,0 +1,194 @@
+Inheritance
+===========
+
+This is an important OOP technique to reuse the class and also extends the functionalities of existing class.
+
+
+General syntax:
+
+  class ClassName extends ExistingClass
+  {
+   }
+An ExistingClass is known as "super" or "base" class and the newly defined "ClassName" class is called "sub" or "derived" class. The derived class can inherits all of the accessbile (public & protected) members of super class.
+
+To access the super's methods in sub-class, you can use "parent" keyword. Syntax:  parent::memberName; Note that the "parent" must be used from within the sub-class.
+
+Overriding Method
+=================
+In some cases where super's methods are unwanted in sub-classes so you can re-defined them in sub-class with same name to prevent the execution of super's method and this technique is called "override".
+
+Example:
+
+<?php
+
+class Language {
+	function __construct() {
+		echo "<br/>Language constructor";
+	}
+
+	function speak() {
+		echo "<br/>I can speak Language";
+	}
+}
+class English extends Language {
+	function __construct() {
+		parent::__construct();
+		echo "<br/>English constructor";
+	}
+
+	function speak() {   /* Override the super's speak() */
+		echo "<br/>I can speak English.";
+	}
+}
+
+$e = new English;
+$e -> speak();
+
+abstract class
+===============
+
+Abstract class means an incomplete class - might be some of the methods are not defined in it.
+
+The "abstract" keyword is used to define an abstract class. The "abstract" keyword is also used with method to define an abstract method (a method without body).
+
+An incomplete (abstract) class cannot be instantiated instead we must have to create sub-classes of abstract class in order to use the class.
+
+The main use of abstract class & abstract methods is to design instrastructure classes so the user can easily adopt the design you've defined so far.
+
+<?php
+abstract class Language {
+	abstract function speak();
+	abstract function write();  
+	abstract function read(); 
+}
+abstract class Gujarati extends Language
+{
+	 function write() {}
+	 function read() {}
+}
+class Mehsani extends Gujarati
+{
+	function speak(){}
+}
+class Kutchhi extends Gujarati
+{
+	function speak(){}
+}
+class Kathaawadi extends Gujarati
+{
+	function speak(){}
+}
+ $a = new Mehsani;
+
+ //You cannot instantiate abstract class
+ // $b=new Language; //error
+ // $c=new Gujarati; // error
+
+
+Interface
+=========
+In OOP, the interface is used to defines the behavior or how many actions and names of action are declared into the interface. The interface cannot allow definition of action. It means "How each and every action works" is not defined by an interface.
+
+Interface is equivalent to an abstract class in some context however an interface is not a "class". The abstract class contains abstract and non-abstract methods along with fields where as an interface must have abstract methods.
+
+General Syntax:
+ 
+ interface InterfaceName
+  {
+    function method1(); // abstract method
+    ...
+   }
+
+ Interface displays "how many actions a behavior consists?" and the  class will implements what the interface says. 
+
+ To implement interfaces:
+
+    class ClassName [extends SuperClass] implements                    interface1,interface2,.... 
+      {
+      }
+
+Example:
+
+<?php
+ interface Singer
+ {
+ 	function canSing();
+ }
+ interface Musician
+ {
+ 	function canCompose();
+ }
+ interface Actor
+ {
+ 	function canAct();
+ }
+ interface Employee
+ {
+ 	function canWork();
+ }
+
+ class Amitabh implements Singer, Musician, Actor, Employee
+ {
+ 	function canSing(){}
+	function canCompose(){}
+	function canAct(){}
+	function canWork(){}
+ } 
+ class Dilip implements Singer,  Actor
+ {
+ 	function canSing(){}
+	function canAct(){}
+ } 
+ 
+ abstract class Great implements Singer, Musician, Actor, Employee
+ {
+ 	 
+ } 
+ 
+class Mithun extends Great
+{
+        function canSing(){}
+	function canCompose(){}
+	function canAct(){}
+	function canWork(){}
+}
+
+
+[NOTE: In theory, it is imposible to create a class without interfaces.]
+
+
+Reuse the interface to construct new interfaces
+----------------------------------------------------
+An interface and extends one or more interfaces to reuse the same declaration again and again.
+
+<?php
+  interface User
+  {
+  	 function show();
+  }
+  interface Clerk extends User
+  {
+  	function add();
+  }
+  interface Admin extends Clerk
+  {
+  	function delete();
+  }
+  
+  class MyApp implements Admin
+  {
+  	 function add() { echo "Add"; }
+	 function delete() { echo "Delete"; }
+	 function show() { echo "show"; }
+  }
+ class Emp implements User
+  {
+	 function show() { echo "show"; }
+  }
+ 
+  $obj = new MyApp;
+  
+  $obj->add();
+  
+ 
+

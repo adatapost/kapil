@@ -1,0 +1,226 @@
+JavaScript
+=====================================================================
+JavaScript is the one and only one client programming language a web-browser has.
+
+Why we learn/use the JavaScript?
+
+   1. To select existing DOMs (Html objects) and set/reset their
+      properties.
+   2. To create new DOMs
+   3. Remove existing DOMs
+   4. Handle the events
+   5. Request web-resource backgroundly (It is called AJAX)
+   6. Set/Reset stylesheet attributes and selectors.
+   7. Validate the user-input (Validation)
+
+JavaSCript Laanguage:
+
+   1. is an OOP
+   2. is a dynamic language
+   3. is a functional language
+
+   What is OOP?
+       It is a program design technique.
+
+   What is dynamic language?
+        Datatype is bound with value instead of variable is known 
+        as "dynamic" feature of language.
+   
+   Whay about functional programming?
+        Language has ability to obtain method references and also
+        create such types that preserve state of methods/functions.
+        In other languages this feature is known as "Closure",         "Lambda-Expression","Delegate" etc.
+
+
+JavaScript Code
+================
+ You can write JavaScript code inside the <script> html tag.
+
+For example:
+
+   <script>
+       //code
+   <script>
+
+ => JavaScript is case-sensitive programming language.
+ => JavaScript code can be stored into external resources (e.g .js     file) and the same <script src="external_resource"></script> will      be used to include the code.
+
+ =>JavaScript code must be written after the appropriate DOMs are created. That means try to write code at the end of body (before </body> or after </body>).
+
+Debug the JavaScript Code
+=========================
+
+We will use "DeveloperTool" and following functions of DT:
+
+   1. console.log(var1,var2,var3,....) - To write value of expressions.
+   2. console.dir(obj) - To dump the object
+   3. console.info(text) - Display "informative" text
+   4. console.error(text) - Display error description
+
+Example:
+
+<!doctype html>
+
+<script>
+    console.info("Starting.....");
+	console.log(10,"Hello",10+20);
+	console.dir(new Date());
+	console.error("This invalid....");
+	console.info("Stopping.....");
+</script>
+
+ 
+variables and datatype
+========================
+JavaScript is dynamic language so there is no explict datatypes exists in different programming languages.
+
+To declare variable, use "var" keyword
+======================================
+
+var varName;
+
+To examine the datatype of value use "typeof" keyword.
+
+
+Example:
+<script>
+   var no;
+   var age = 10;
+   var name = 'Rajesh';
+ 
+   console.log(no,age,name);
+   console.log(typeof no);
+   console.log(typeof name);
+   console.log(typeof(age));
+</script>
+
+Scope - local and global
+=============================
+Variable declared without "var" inside the function/method has global scope. Variable declared outside the method/function with or without "var" is also global scope.
+
+The variable declared inside the function with "var" keyword is local scope.
+
+<script>
+   function test() {
+        m= 10; <--------- global var
+   }
+
+   test(); //call the test()
+   console.log(m);
+</script>
+ 
+ Now, change var m = 10; and see what happend? (exception will be thrown - m is undefined).
+
+
+Selection and loop statements
+-----------------------------
+if, switch, for, while and do while has same syntax as C/C++/java.
+
++ string concat operator
+=============================
+The + operator convert datatype to string when any of the one operand is string.
+
+<script>
+   var no1 = "10";
+   var no2 = 20;
+   
+   console.log(no1+no2,typeof(no1), typeof(no2));
+</script>
+
+
+parseInt() and parseFloat() functions
+========================================
+To convert "string" numeric value to "number" datatype.
+
+  var no1 = "10";
+  var no2 = 30;
+  var no3 = parseInt(no1) + no2;
+  console.log(no3);
+
+Arithmetic operators requires both the operands must belongs to "number" type. In JavaScript number datatype is 64 bits and it represent integer and double (float) value.
+
+  <script>
+   var no = 10;
+   var no1 = 20.20;
+   console.log(typeof no, typeof no1);  //number number
+</script>
+
+Arrays
+===============================================
+The Array object keyword or [] subscript operator will be used to construct an array.
+
+<script>
+   var cities = ["Meh","Pat","Raj"];
+   var nos = new Array(10,20,30,40);
+
+   console.log(cities);
+   console.log(nos);
+</script>
+
+
+To traverse "arrays" use for in loop
+=====================================
+<script>
+   var cities = ["Meh","Pat","Raj"];
+   console.log(cities[0]); // Meh
+   console.log(cities[2]); // Raj
+
+   for(var index in cities) {
+        console.log(index, cities[index]);
+   }
+
+   console.log("Total array elements : " + cities.length);
+</script>
+  
+
+
+JSON - JavaScript Object Notation
+=============================================
+
+ To construct an object use following notation (syntax):
+
+ var refVar = { "property1": value1, "property2": value2,...};
+
+ Note that the name of property must be "string" where as value can be  number,date, array, object , function, boolean etc.
+
+
+ Example:
+
+<script>
+  var emp = {"no": 10, "name": "Raj"};
+  console.log(emp);
+
+  //get values from properties
+  console.log(emp.no, emp.name); //OR
+  console.log(emp["no"], emp["name"]);
+
+  //set values
+  emp.no = 90;
+  emp.name = "Ram";
+
+  console.log(emp);
+
+  //add new properties
+  emp.address = "12 Abc Society";
+  console.log(emp);
+</script>
+ 
+
+Example: List of objects --- Array of JSON
+
+<!doctype html>
+<script>
+	var list = [{
+		"roll" : 10,
+		"name" : "Raj"
+	}, {
+		"roll" : 20,
+		"name" : "Man"
+	}];
+	console.log(list);
+	
+	for(var index in list){
+		var s = list[index];
+		console.log(s.roll , s.name);
+	}
+</script>

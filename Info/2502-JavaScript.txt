@@ -1,0 +1,399 @@
+The window namespace 
+==========================================================
+
+Any variables you create as "global" will be added into "window" namespace.
+
+<!doctype html>
+
+<title>Sample JavaScript Program</title>
+
+<script>
+	var no = 10;
+	name = "Rajesh";
+	window.address = "12,ABC";
+	
+	console.log(window.no, window.name,address);
+	
+	function test(){
+		enpNo = 10;  //global
+		window.testNo =400; //global
+		
+		var testIt  = 10; //local
+		
+	}
+</script>
+
+function keyword
+==================================================================
+In JavaScript, the function keyword will be used to define 'function' and 'class' (There is no such class keyword in Javascript).
+
+Function definition syntax
+---------------------------
+
+  Syntax - 1
+
+         function functionName(arguments.....) {
+               /* statements */
+               .....
+              return value;
+         }
+
+  Syntax - 2 -- Store memory reference of function to the variable 
+                OR anonymous (nameless) function.
+
+    
+      (function(arg...){
+          statements....
+      })(arg...);
+       |_________ This () used to execute the function
+
+
+     var refVar = function(arg...) { .... };
+
+
+
+<!doctype html>
+
+<title>Sample JavaScript Program</title>
+
+<script>
+	 function firstSyntax() {
+	 	console.log('First Syntax - named function');
+	 }
+	 
+	 (function(){
+	 	console.log('Anonymous function');
+	 })();
+	 
+	 
+	 var add = function(no1,no2) {
+	 	return no1+no2;
+	 };
+	 //call the function
+	 
+	 firstSyntax();
+	 console.log(add(44,55));
+	  console.log(add('44',55));
+</script>
+
+
+'function' to define a class
+---------------------------------------------------------------
+ General syntax:
+
+   function ClassName(arguments......) /*constructor*/ {
+
+      //fields
+ 
+    } 
+
+
+ In JavaScript class all field inside the class must be qualified with "this" keyword.
+
+<!doctype html>
+
+<title>Sample JavaScript Program</title>
+
+<script>
+	 function Product(){
+	 	this.id = 1;
+	 	this.name = 'Pencil';
+	 	
+	 	this.info = function(){
+	 		console.log(this.id, this.name);
+	 	};
+	 }
+	 
+	//Create objects
+	
+	var e1 = new Product();
+	var e2 = new Product;
+	
+	console.log(e1,e2);
+	e1.info();
+	e2.id = 90;
+	e2.name = 'Pen';
+	e2.info(); 
+</script>
+
+
+Class constructor parameters
+===========================================================
+<!doctype html>
+
+<title>Sample JavaScript Program</title>
+
+<script>
+	 function Product(id,name){
+	 	this.id = id;
+	 	this.name = name;
+	 	
+	 	this.info = function(){
+	 		console.log(this.id, this.name);
+	 	};
+	 }
+	 
+	//Create objects
+	
+	var e1 = new Product(10,"Books");
+	var e2 = new Product;
+	
+	console.log(e1,e2);
+	 
+	 console.log(e1.id, e1.name, e1["id"], e1["name"]);
+</script>
+
+
+Working with Document Object Model (HTML Objects)
+===================================================================
+When a web-browser display or render HTML tags before this event each and every HTML tag is converted into an object and this object is known as DOM. In this context, DOMs are generally created by the web-browser. However the JavaScript programming language also create, remove, set/get DOMs programatically.
+
+
+To select DOMs
+=========================
+
+ 1. document.getElementsByTagName("tagName")
+
+    This method returns NodeList (array of DOM) of given tagName.
+
+Example:
+
+         <body>
+		<h1>Para1</h1>
+			<h1>Para2</h1>
+		<input type="text"/>
+		
+		<script>
+			var list = document.getElementsByTagName("h1");
+			console.log(list);
+			
+			for(i=0;i<list.length;i++) {
+				var d = list[i];
+				console.log(d);
+				//d["align"]="right";
+				d.align = 'center';
+			}
+		</script>
+	</body>
+
+2. document.getElementsByName('name_attribute')
+
+  This method returns NodeList (array of DOM) of given 'name' attribute.
+
+
+
+3. dom.setAttribute("name","value") -- To change attribute of DOM.
+4. dom.getAttribute("name") -- To return attribute value.
+
+
+<h1 name="one">Para1</h1>
+<h1>Para2</h1>
+<input name="one" type="text"/>
+
+<script>
+  var list = document.getElementsByName("one");
+  console.log(list);
+  for ( i = 0; i < list.length; i++) {
+	var obj = list[i];
+	console.log(obj);
+	if (obj.getAttribute("type")) {
+		obj.setAttribute("type", "submit");
+	}
+  }
+</script>
+
+
+5. document.getElementById("id") -- Returns single element.
+
+6. document.createElement("tagName") -- It creates a DOM.
+
+7. dom.appendChild(newDom) -- To insert new dom into existing dom.
+
+
+Example:
+
+               <ul id="list"></ul>
+		<script>
+		   var list = document.getElementById("list");
+		   
+		   var item1 = document.createElement("li");
+		   item1.innerHTML = "India";
+		   
+		   list.appendChild(item1);
+		   console.log(list);
+		</script>
+
+Example:
+
+                <select id="country"></select>
+		<script>
+		   var country = document.getElementById("country");
+		   var names = ["India","Nepal","USA","UK"];
+		   
+		   for(var index in names) {
+		   	  var op = document.createElement("option");
+		   	  op.innerHTML = names[index];
+		   	  country.appendChild(op);
+		   }
+		</script>
+
+
+Event Handling
+===================================================================
+
+Event is reference variable that holds memory referene of "function".
+
+There are two ways to go:
+
+ 1. declarative attchement of event handler (function)
+
+
+                <p onclick="doSomething()">Click Me</p>
+		 <h1 onclick="doSomething()">Click Me</h1>
+		 <input type="text" onclick="doSomething()"/>
+		 <input type="button" value='Click Me' onclick="doSomething()"/>
+		 <a href="#" onclick="doSomething()">Click Me</a>
+		<script>
+		   function doSomething(){
+		   	  console.log("Clicked");
+		   }
+		</script>
+
+
+  2. Attach event handler dynamically (programatically)
+
+               <h1>Click Me1</h1>
+		<h1>Click Me2</h1>
+		<input type="text"/>
+		<input type="button" value="Test"/>
+		<script>
+		   var list = document.getElementsByTagName("h1");
+		   for(i=0;i<list.length;i++) {
+		   	  var obj = list[i];
+		   	  obj.onclick = function(){
+		   	  	 console.log("Clicked...");
+		   	  };
+		   }
+		   var list = document.getElementsByTagName("input");
+		   for(i=0;i<list.length;i++) {
+		   	  var obj = list[i];
+		   	  obj.onclick = function(){
+		   	  	 console.log("Clicked...");
+		   	  };
+		   }
+		</script>
+
+key events
+============================================
+
+
+keypress, keydown and keyup handler should use window.event to determine the extra data.
+
+
+Example:
+
+                <input type="text" onkeydown="testIt()"/>
+		 <script>
+		 	function testIt(event) {
+		 		if(!event) {
+		 			event = window.event;
+		 		}
+		 		console.log(event);
+		 	}
+		 </script>
+
+
+Use onkeydown or keyup event to determine which "key" has been hit.
+
+Use onkeypress when we are interested to use ASCII char value.
+
+
+                 <input type="text" onkeypress="return testIt()"/>
+		 <script>
+		 	function testIt(event) {
+		 		if(!event) {
+		 			event = window.event;
+		 		}
+		 		return event.which>=48 && event.which<=57;
+		 	}
+		 </script>
+
+Example: Add country name to <select>
+
+
+Country Name : <input type="text" id="name"/>
+		<a href="#" onclick="addIt()">Add</a>
+		 
+		<select id="country"></select>
+	
+		<script>
+			
+			function addIt() {
+				var name = document.getElementById("name");
+			    var country = document.getElementById("country");
+			
+			    var op = document.createElement("option");
+			    op.innerHTML = name.value;
+			    country.appendChild(op);
+			}
+		</script>
+
+
+Example: Passing object (DOM) reference to the event handler.
+
+<h1>Sample Site</h1>
+		 <div>
+		 	<a href="#" name="home" onclick="testIt(this)">Home</a>
+		 	<a href="#" name="about" onclick="testIt(this)">About us</a>
+		 	<a href="#" name="contact" onclick="testIt(this)">Contact us</a>
+		 </div>
+	
+		<script>
+			function testIt(obj) {
+				
+				var name = obj.getAttribute("name");
+				console.log(name);
+				if(name == "home") {
+					window.location.href="add-country.php";
+				}
+				if(name == "about") {
+					window.location.href="about.php";
+				}
+				if(name == "contact") {
+					window.location.href="about.php";
+				}
+			}
+		</script>
+
+Example: Change CSS class name.
+
+
+<h1>Sample Site</h1>
+		 <div>
+		 	<a href="#" name="home" onclick="testIt(this)">Home</a>
+		 	<a href="#" name="about" onclick="testIt(this)">About us</a>
+		 	<a href="#" name="contact" onclick="testIt(this)">Contact us</a>
+		 </div>
+	    <style>
+	    	.select{
+	    		background:red;
+	    	}
+	    </style>
+		<script>
+			function testIt(obj) {
+				
+				obj.setAttribute("class","select");
+				var name = obj.getAttribute("name");
+				
+				console.log(name);
+				if(name == "home") {
+					//window.location.href="add-country.php";
+				}
+				if(name == "about") {
+					//window.location.href="about.php";
+				}
+				if(name == "contact") {
+					//window.location.href="about.php";
+				}
+			}
+		</script>

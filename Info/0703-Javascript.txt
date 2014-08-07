@@ -1,0 +1,173 @@
+Closure
+=========
+
+JavaSCript function defined inside another function will persist value till web-page is active. 
+
+ function OuterFunction(data)
+  {
+
+     return function()  <--- Inner Function
+      {
+          console.log(data); <--- stat of 'data'  variable will be
+				  preserved
+      };
+
+   }
+
+Example:
+
+<!doctype html>
+
+<html>
+	<head>
+		<title>JavaScript</title>
+	</head>
+	<body>
+		<div id="output"></div>
+	</body>
+	<script>
+		var output = document.getElementById("output");
+		var labels = ["Home", "About us", "Contact us"];
+
+		function returnClickHandler(index, label) {
+			//Closure - to persist the index and label value
+			return function() {
+				console.log(index, label);
+			};
+		}
+
+		for (i in labels) {
+			var link1 = document.createElement("a");
+			link1.setAttribute("href", "#");
+			link1.innerHTML = labels[i];
+			link1.onclick = returnClickHandler(i, labels[i]);
+			output.appendChild(link1);
+		}
+	</script>
+</html>
+
+Example: Closure to set font size
+
+<!doctype html>
+
+<html>
+	<head>
+		<title>JavaScript</title>
+	</head>
+	<body>
+		<a href="#" id="btnOne">A+</a>
+		<a href="#" id="btnTwo">A-</a>
+		
+		<h1>Hello World</h1>
+	</body>
+	<script>
+		 function SetSize(size){
+		 	 this.incr = function(){
+		 	 	size=size+0.1;
+		 	 	document.body.style.fontSize = size + "em";
+		 	 };
+		 	 
+		 	 this.decr = function(){
+		 	 	size=size-0.1;
+		 	 	document.body.style.fontSize = size + "em";
+		 	 };
+		 }
+		 
+		 var data =new  SetSize(1.0);
+		 
+		 document.getElementById("btnOne").onclick = data.incr;
+		 document.getElementById("btnTwo").onclick = data.decr;
+		 
+	</script>
+</html>
+
+
+Write PHP data into response buffer and later use it with JavaScript
+====================================================================
+
+Example-1
+==========
+
+<!doctype html>
+<?php
+  $no = 100;
+?>
+<html>
+	<head><title>JavaScript</title></head>
+	 
+	 <input type="text" id="output"/>
+	 <input type="button" value="Show" onclick="showIt()"/>
+	<script>
+	function showIt() {
+		var output = document.getElementById("output");
+		var p = <?=$no?>; 
+		output.value = p;
+	}
+	</script>
+</html>
+
+
+Example-2
+==========
+
+ PHP function json_encode() converts PHP array data into javascript  array data or JSON.
+
+
+<!doctype html>
+<?php
+  $cities = array("Mehsana","Patan","Rajkot");
+?>
+<html>
+	<head><title>JavaScript</title></head>
+	 
+	 
+	<script>
+	   var ar = <?=json_encode($cities)?>;
+	   for(i in ar)
+	   {
+	   	console.log(i, ar[i]);
+	   }
+	</script>
+</html>
+
+
+JSON object
+============
+<!doctype html>
+<?php
+  $emp = array("code"=>10,"name"=>"Rajesh","salary"=>4000);
+?>
+<html>
+	<head><title>JavaScript</title></head>
+	 
+	 
+	<script>
+	   var ar = <?=json_encode($emp)?>;
+	   for(i in ar)
+	   {
+	   	console.log(i, ar[i]);
+	   }
+	</script>
+</html>
+
+
+Array of JSON
+==============
+<!doctype html>
+<?php
+  $emps = array(
+           array("code"=>10,"name"=>"Rajesh","salary"=>4000),
+           array("code"=>20,"name"=>"Rajesh","salary"=>4000),
+           array("code"=>30,"name"=>"Manish","salary"=>4000)
+		   );
+?>
+<html>
+	<head><title>JavaScript</title></head>
+	<script>
+	   var ar = <?=json_encode($emps)?>;
+	   for(i in ar)
+	   {
+	   	console.log(i, ar[i]);
+	   }
+	</script>
+</html>

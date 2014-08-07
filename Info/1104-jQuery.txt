@@ -1,0 +1,61 @@
+jQuery Ajax functions
+====================================================================
+jQuery Ajax function request a web-resource programatically and also receive the returned result (response).
+
+1. dom.load(url) -- load() request the url and insert returned    response into the innerHTML of active dom.
+
+
+Ex:1
+
+getdate.php
+-------------
+<?php
+   echo date('d-m-Y');
+
+ajax-test.php
+--------------
+	        <div id="output"></div>
+		<script>
+			$("#output").load('getdate.php');
+		</script>
+
+
+Ex:2 Multipage webapp using load() method.
+
+index.php
+---------
+
+<h1>Site</h1>
+<div>
+  <a href="#" id="home">Home</a>
+  <a href="#" id="about">About us</a>
+</div>
+<hr/>
+<div id="output"></div>
+
+
+<script>
+  $("#home").click( function(){
+    $("#output").load('home.php');
+  });
+ $("#about").click( function(){
+    $("#output").load('about.php');
+  });
+</script>
+
+
+2. $.ajax({}) -- To request web-resource by sending POST or GET request data.
+
+Syntax:
+
+ $.ajax({
+    url: 'page_or_url',
+    type: 'post or get',
+    data: { data_here },
+    success: function(result) {
+
+    },
+    error: function(xhr) {
+      
+    }
+  });

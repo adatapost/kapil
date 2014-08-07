@@ -1,0 +1,214 @@
+The Namespace
+==============
+
+The namespace keyword in PHP create a group of "classes/interfaces/functions/constants" and keep one group of elements distinct from another group of element. The namespace in PHP is similar concept in Java package.
+
+Syntax:
+
+  namespace NamespaceName;
+  namespace Namespace\SubNamespace;
+
+Namespace should be appear at the begining of .php block. Namespace name should reflect the file system folder so we can use PHP's magic feature called "Autoclassloader".
+
+Syntax to qualify namespaced element:
+
+   1. 
+         \Namespace\ElementName;
+
+   2. 
+         use Namespace; This statement import the namespace and element
+			into current scope.
+
+         use Namespace as Alias; This syntax is used to rename the 				 element within the current scope.
+
+Example:
+
+<?php
+namespace A;
+
+  class Emp
+  {
+  	 function __construct()
+	 {
+	 	echo "<br/>Emp for DB";
+	 }
+  }
+  
+  function sayHi() { echo "Hi from A";}
+  
+  const MAX = 100;
+  
+namespace B;  
+  class Emp
+  {
+  	function __construct()
+	 {
+	 	echo "<br/>Emp for Report";
+	 }
+  }
+  function sayHi() { echo "Hi from A";}
+  const MAX = 10;
+  
+  
+  //objects
+  
+  $a = new \A\Emp;
+  $b = new \B\Emp;
+  
+  //call function
+  \A\sayHi();
+  \B\sayHi();
+  echo "<br/>", \A\MAX;
+  echo "<br/>", \B\MAX;
+
+Example: Import the Emp type
+
+<?php
+namespace A;
+
+  class Emp
+  {
+  	 function __construct()
+	 {
+	 	echo "<br/>Emp for DB";
+	 }
+  }
+  
+  function sayHi() { echo "Hi from A";}
+  
+  const MAX = 100;
+  
+namespace B;  
+  class Emp
+  {
+  	function __construct()
+	 {
+	 	echo "<br/>Emp for Report";
+	 }
+  }
+  function sayHi() { echo "Hi from A";}
+  const MAX = 10;
+  
+  
+  //objects
+  
+  use \A\Emp as Db;
+  use \B\Emp as Report;
+   
+  $a = new Db;
+  $b = new Report;
+  
+   
+  
+Example: Class files stored into different folder but their namespace reflect the folder names.
+
+/webapp/
+       |-----------/App
+                   |
+                   |-----/Db
+                          Emp.php
+                   |-----/Report
+                          Emp.php
+       | test.php
+
+/App/Db/Emp.php
+----------------
+<?php
+namespace App\Db;
+
+  class Emp
+  {
+  	 function __construct()
+	 {
+	 	echo "<br/>Emp for DB";
+	 }
+  }
+/App/Report/Emp.php
+--------------------
+<?php
+namespace App\Report;
+
+  class Emp
+  {
+  	 function __construct()
+	 {
+	 	echo "<br/>Emp for Report";
+	 }
+  }
+
+test.php
+-----------------------
+<?php
+ require "App\Db\Emp.php";
+ require "App\Report\Emp.php";  
+   
+ $a = new \App\Db\Emp;
+ $b = new \App\Report\Emp;   
+  
+  
+ //Alias for namespace
+ 
+ use \App\Db as A;
+ use \App\Report as B;
+ 
+ $a = new A\Emp;
+ $b = new B\Emp;   
+  
+ //Alias for type
+   
+  
+ use \App\Db\Emp as EmpDb;
+ use \App\Report\Emp as EmpReport;
+ 
+ $a = new EmpDb;
+ $b = new EmpReport;   
+  
+
+PHP autoload classes
+==================================================================
+ PHP's magic feature which reads class file when it is used in code  file. To implement this feature we must have to create a function with following syntax:
+
+  function functionName($className)
+   {
+     require_once $className . ".php";
+    }
+
+And register this function to PHP's closure function:
+
+ spl_autoload_register('functionName');
+
+Example: In this example we don't have include .php class files explicitly. Our autoload function will include implicitly.
+
+
+test1.php
+----------
+<?php
+ 
+ function myAutoload($className)
+ {
+ 	require_once $className . ".php";
+ }
+ 
+ spl_autoload_register('myAutoload');
+   
+ $a = new \App\Db\Emp;
+ $b = new \App\Report\Emp;   
+
+ //Alias for namespace
+ 
+ use \App\Db as A;
+ use \App\Report as B;
+ 
+ $a = new A\Emp;
+ $b = new B\Emp;   
+  
+ //Alias for type
+   
+  
+ use \App\Db\Emp as EmpDb;
+ use \App\Report\Emp as EmpReport;
+ 
+ $a = new EmpDb;
+ $b = new EmpReport;   
+  
+  
